@@ -9,9 +9,9 @@ template hasAnnotation(alias f, alias Attr)
     alias allAnnotations = TypeTuple!(__traits(getAttributes, f));
     template hasMatch(alias attr) {
         static if(is(Attr)) {
-            alias hasMatch = Identity!(is(typeof(attr) == Attr) || is(attr == Attr));
+            alias hasMatch = std.traits.Identity!(is(typeof(attr) == Attr) || is(attr == Attr));
         } else {
-            alias hasMatch = Identity!(is(attr == Attr));
+            alias hasMatch = std.traits.Identity!(is(attr == Attr));
         }
     }
     enum bool hasAnnotation = anySatisfy!(hasMatch, allAnnotations);
@@ -66,7 +66,7 @@ template hasValueAnnotation(alias f, alias Attr)
     import std.typetuple : anySatisfy, TypeTuple;
 
     alias allAnnotations = TypeTuple!(__traits(getAttributes, f));
-    alias hasMatch(alias attr) = Identity!(is(Attr) && is(typeof(attr) == Attr));
+    alias hasMatch(alias attr) = std.traits.Identity!(is(Attr) && is(typeof(attr) == Attr));
     enum bool hasValueAnnotation = anySatisfy!(hasMatch, allAnnotations);
 }
 
